@@ -3,12 +3,13 @@ import axios from "axios";
  
 const baseURL = "https://social-network.samuraijs.com/api/1.1";
 
-const settings = {
+const instance = axios.create({
+    baseURL: "https://social-network.samuraijs.com/api/1.1",
     withCredentials: true,
     headers: {
        'API-KEY': "a8d9924c-0a09-4a81-9c01-6763abfe8005"
     }
- }
+ });
 
  type GetTodoLIstApiType = {
      id: string
@@ -18,19 +19,18 @@ const settings = {
  }
 
  export const todoListApi = {
-     getTodoLists() {
-         let propmise = axios.get<Array<GetTodoLIstApiType>>(baseURL + "/todo-lists", settings);
-         return propmise;
+     getTodoLists() {          
+         return instance.get<Array<GetTodoLIstApiType>>("/todo-lists");
      },
      createTodoList() {
-         return axios.post(baseURL + "/todo-lists", {title: "NewTodoList1"}, settings);
+         return instance.post("/todo-lists", {title: "NewTodoList1"});
      },
      updateTodoList() {
-         const id = "122670fa-dbef-4f2e-9a4f-bd14755d1f89"; 
-         return axios.put(baseURL + `/todo-lists/${id}`, {title: "MyTodoList"}, settings);
+         const id = "dfe37d1e-27e0-4d15-89e8-e6a0589c4b42"; 
+         return instance.put(`/todo-lists/${id}`, {title: "MyTodoList2"});
      },
      deleteTodoList() {
-        const id = "122670fa-dbef-4f2e-9a4f-bd14755d1f89"; 
-         return axios.delete(baseURL + `/todo-lists/${id}`, settings);
+        const id = "dfe37d1e-27e0-4d15-89e8-e6a0589c4b42"; 
+         return instance.delete(`/todo-lists/${id}`);
      }
  }
