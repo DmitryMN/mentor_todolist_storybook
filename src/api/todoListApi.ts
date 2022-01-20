@@ -11,26 +11,33 @@ const instance = axios.create({
     }
  });
 
- type GetTodoLIstApiType = {
+ type TodolistType = {
      id: string
      title: string
      addedDate: string
-     order: string
+     order: number
+ }
+
+ type ResponseType<T> = {
+     data: T
+     messages: Array<string>
+     fieldsErrors: Array<string>
+     resultCode: number
  }
 
  export const todoListApi = {
-     getTodoLists() {          
-         return instance.get<Array<GetTodoLIstApiType>>("/todo-lists");
+     getTodoLists() {        
+         return instance.get<Array<TodolistType>>("/todo-lists");
      },
      createTodoList() {
-         return instance.post("/todo-lists", {title: "NewTodoList1"});
+         return instance.post<ResponseType<{item: TodolistType}>>("/todo-lists", {title: "NewTodoList1"});
      },
      updateTodoList() {
-         const id = "dfe37d1e-27e0-4d15-89e8-e6a0589c4b42"; 
-         return instance.put(`/todo-lists/${id}`, {title: "MyTodoList2"});
+         const id = "a1e2aaa6-2ab6-4819-917c-0996e5967c02"; 
+         return instance.put<ResponseType<{}>>(`/todo-lists/${id}`, {title: "MyTodoList2"});
      },
      deleteTodoList() {
-        const id = "dfe37d1e-27e0-4d15-89e8-e6a0589c4b42"; 
-         return instance.delete(`/todo-lists/${id}`);
+        const id = "a1e2aaa6-2ab6-4819-917c-0996e5967c02"; 
+         return instance.delete<ResponseType<{}>>(`/todo-lists/${id}`);
      }
  }
