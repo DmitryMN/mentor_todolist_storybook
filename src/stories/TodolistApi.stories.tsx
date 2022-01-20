@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { todoListApi } from '../api/todoListApi';
 
 export default {
    title: 'API'
@@ -49,6 +50,9 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
    const [state, setState] = useState<any>(null)
    useEffect(() => {
+      axios.put(baseUrl + `/todo-lists/${"dfe37d1e-27e0-4d15-89e8-e6a0589c4b42"}`, {title: "new1"}, settings).then((responce) => {
+         setState(responce.data);
+      });
    }, [])
 
    return <div> {JSON.stringify(state)}</div>
