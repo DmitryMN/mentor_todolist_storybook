@@ -1,4 +1,5 @@
 import axios from "axios";
+
  
 const baseURL = "https://social-network.samuraijs.com/api/1.1";
 
@@ -9,9 +10,17 @@ const settings = {
     }
  }
 
+ type GetTodoLIstApiType = {
+     id: string
+     title: string
+     addedDate: string
+     order: string
+ }
+
  export const todoListApi = {
      getTodoLists() {
-         return axios.get(baseURL + "/todo-lists", settings);
+         let propmise = axios.get<Array<GetTodoLIstApiType>>(baseURL + "/todo-lists", settings);
+         return propmise;
      },
      createTodoList() {
          return axios.post(baseURL + "/todo-lists", {title: "NewTodoList1"}, settings);
